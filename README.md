@@ -24,16 +24,12 @@ Criar uma network para os containers se comunicarem
 
 Subir o container do redis
 
-    docker run -p 6379:6379 -itd redis/redis-stack:latest --net=giropops-network --name redis
+    docker run -p 6379:6379 -itd --net giropops-network --name redis redis
 
 Comando de build da imagem (não precisa, pois estará no DockerHub)
 
     docker image build -t mmazoni/linuxtips-giropops-senhas:1.0 .
 
-Pegar o endereço de IPv4 do redis 
-
-    docker inspect giropops-network
-
 Subir o container da aplicação
 
-    docker run -p 5000:5000 -it --name senhas --net=giropops-network -e REDIS_HOST=172.21.0.2 mmazoni/linuxtips-giropops-senhas:1.0
+    docker run -p 5000:5000 -it --name senhas --net=giropops-network -e REDIS_HOST=redis mmazoni/linuxtips-giropops-senhas:1.0
